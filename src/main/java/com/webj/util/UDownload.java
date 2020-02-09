@@ -41,6 +41,7 @@ public class UDownload {
                 e.printStackTrace();
                 System.out.println("空等待");
                 Thread.sleep(3000);
+                continue;
             }
 
             String finalLine = line;
