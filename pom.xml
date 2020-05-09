@@ -73,12 +73,6 @@
 
 
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sap</id>
-            <url>https://repo.fenixedu.org/fenixedu-maven-repository/</url>
-        </repository>
-    </repositories>
 
 
 </project>
