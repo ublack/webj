@@ -23,10 +23,12 @@ public class UDownload {
 
     public static void main(String[] args) throws InterruptedException, IOException {
 
+        ULine.main(null);
+
         List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
         ExecutorService executors = Executors.newFixedThreadPool(50);
 
-        Collections.reverse(lines); // 从第一集开始下载
+        Collections.sort(lines);
         Stack<String> stack = new Stack<>();
         stack.addAll(lines);
         AtomicInteger cd = new AtomicInteger(lines.size());
