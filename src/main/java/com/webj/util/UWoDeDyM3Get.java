@@ -10,23 +10,25 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.logging.Logger;
 
 public class UWoDeDyM3Get {
 
     public static void main(String[] args) throws IOException {
+        String mp = System.getProperty("user.home");
 
-        Path urlFile = Paths.get("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\url.txt");
+        Path urlFile = Paths.get(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\url.txt");
 
         String url = new String(Files.readAllBytes(urlFile));
-        String curPart = url.substring(url.lastIndexOf("/"), url.lastIndexOf(".html")).split("-")[2];
         String urlScript  = Jsoup.connect(url).get().select("div.player").first().selectFirst("script").data();
         System.out.println(urlScript);
 
-        String startPart = String.format("%02d", Integer.parseInt(curPart) + 1) + "%u96C6%24";
-        String endPart = "%24zuidam3u8";
+        String startPart = "now=base64decode(\"";
+        String endPart = "\");var p";
         int start = urlScript.indexOf(startPart) + startPart.length();
         int end = urlScript.indexOf(endPart, start);
-        String m3u8AddrKkUrl = URLDecoder.decode(urlScript.substring(start, end));
+        String m3u8AddrKkUrl = new String(Base64.getDecoder().decode(urlScript.substring(start, end)));
         System.out.println(m3u8AddrKkUrl);
 
         String kkText = Jsoup.connect(m3u8AddrKkUrl).ignoreContentType(true).get().text();
@@ -44,20 +46,19 @@ public class UWoDeDyM3Get {
             }
         }
         FileCopyUtils.copy(m3DownloadBuilder.toString().getBytes(),
-                new File("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
+                new File(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
         // 播放用文件
         StringBuilder playBuilder = new StringBuilder();
         for (String m3line : m3lines) {
             if (m3line.endsWith(".ts")) {
-                playBuilder.append("http://localhost:7680/webj/ts/").append(m3line).append("\n");
+                playBuilder.append("http://192.168.124.3:7680/webj/ts/").append(m3line).append("\n");
             }else {
                 playBuilder.append(m3line).append("\n");
             }
         }
         FileCopyUtils.copy(playBuilder.toString().getBytes(),
-                new File("G:\\vv\\m3u8\\common\\index.m3u8"));
+                new File(mp + "\\vv\\m3u8\\common\\index.m3u8"));
 
     }
-
 
 }

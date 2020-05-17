@@ -15,11 +15,11 @@ public class M3uServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-
+        String mp = System.getProperty("user.home");
         String path = req.getPathInfo();
         String[] paths = StringUtils.split(path, "/");
         String fileName = paths[paths.length - 2] + "/" + paths[paths.length - 1];
-        FileCopyUtils.copy(new FileInputStream("G:\\vv\\m3u8\\" + fileName), resp.getOutputStream());
+        FileCopyUtils.copy(new FileInputStream(mp + "\\vv\\m3u8\\" + fileName), resp.getOutputStream());
 
     }
 

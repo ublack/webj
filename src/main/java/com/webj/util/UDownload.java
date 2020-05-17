@@ -25,7 +25,8 @@ public class UDownload {
 
         ULine.main(null);
 
-        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
+        String mp = System.getProperty("user.home");
+        List<String> lines = Files.readAllLines(Paths.get(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
         ExecutorService executors = Executors.newFixedThreadPool(50);
 
         Collections.sort(lines);
@@ -60,7 +61,7 @@ public class UDownload {
                         conn.setRequestProperty("Connection", "Keep-Alive");
                         InputStream inStream = conn.getInputStream();
                         String fileName = StringUtils.getFilename(finalLine);
-                        Files.copy(inStream, Paths.get("G:\\vv\\ts", fileName), StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(inStream, Paths.get(mp + "\\vv\\ts", fileName), StandardCopyOption.REPLACE_EXISTING);
                         System.out.println(finalLine);
                         int now = cd.addAndGet(-1);
                         System.out.printf("剩余量: %s%n", now);

@@ -14,8 +14,9 @@ public class KeyServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+        String mp = System.getProperty("user.home");
 
-        FileCopyUtils.copy(new FileInputStream("G:\\vv\\m3u8\\common\\key.key" ), resp.getOutputStream());
+        FileCopyUtils.copy(new FileInputStream(mp + "\\vv\\m3u8\\common\\key.key"), resp.getOutputStream());
 
     }
 

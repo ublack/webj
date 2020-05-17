@@ -9,11 +9,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
 
 public class ULine {
 
     public static void main(String[] args) throws IOException {
-        Path m3u8 = Paths.get("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt");
+        String mp = System.getProperty("user.home");
+
+        Path m3u8 = Paths.get(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt");
         List<String> lines = Files.readAllLines(m3u8);
         StringBuilder result = new StringBuilder();
         for (String line : lines) {
@@ -21,7 +24,7 @@ public class ULine {
                 result.append(line).append("\n");
             }
         }
-        FileCopyUtils.copy(result.toString().getBytes(), new File("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
+        FileCopyUtils.copy(result.toString().getBytes(), new File(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
     }
 
 

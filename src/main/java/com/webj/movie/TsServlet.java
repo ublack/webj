@@ -15,9 +15,10 @@ public class TsServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String mp = System.getProperty("user.home");
 
         String path = req.getPathInfo();
         String fileName = StringUtils.getFilename(path);
-        FileCopyUtils.copy(new FileInputStream("G:\\vv\\ts\\" + fileName), resp.getOutputStream());
+        FileCopyUtils.copy(new FileInputStream(mp + "\\vv\\ts\\" + fileName), resp.getOutputStream());
     }
 }

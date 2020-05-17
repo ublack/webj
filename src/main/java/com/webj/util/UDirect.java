@@ -13,8 +13,9 @@ import java.nio.file.Paths;
 public class UDirect {
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        String mp = System.getProperty("user.home");
 
-        Path urlFile = Paths.get("C:\\Users\\T460P\\IdeaProjects\\webj\\src\\main\\resources\\url.txt");
+        Path urlFile = Paths.get(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\url.txt");
 
         String url = new String(Files.readAllBytes(urlFile));
         String urlScript = Jsoup.connect(url).get().select("iframe").first().absUrl("src");
@@ -36,7 +37,7 @@ public class UDirect {
             playBuilder.append(m3line).append("\n");
         }
         FileCopyUtils.copy(playBuilder.toString().getBytes(),
-                new File("G:\\vv\\m3u8\\common\\index.m3u8"));
+                new File(mp + "\\vv\\m3u8\\common\\index.m3u8"));
 
     }
 

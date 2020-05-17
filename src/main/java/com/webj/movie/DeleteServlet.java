@@ -20,17 +20,18 @@ public class DeleteServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String mp = System.getProperty("user.home");
 
         String dirName = req.getParameter("movie");
-        List<String> names = Files.readAllLines(Paths.get("G:/vv/m3u8/" + dirName + "/index.m3u8"))
+        List<String> names = Files.readAllLines(Paths.get(mp + "/vv/m3u8/" + dirName + "/index.m3u8"))
                 .stream()
                 .filter(v -> v.endsWith(".ts"))
                 .map(v -> new LinkedList<>(Arrays.asList(v.split("/"))).getLast()).collect(Collectors.toList());
 
         // 删除 ts 片段
-        names.forEach(v -> FileSystemUtils.deleteRecursively(new File("G:/vv/ts/" + v)));
+        names.forEach(v -> FileSystemUtils.deleteRecursively(new File(mp + "/vv/ts/" + v)));
         // 删除 文件夹
-        FileSystemUtils.deleteRecursively(new File("G:/vv/m3u8/" + dirName));
+        FileSystemUtils.deleteRecursively(new File(mp + "/vv/m3u8/" + dirName));
          // 日志
         System.out.printf("删除: %s", dirName);
         System.out.println();
