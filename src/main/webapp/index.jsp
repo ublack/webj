@@ -8,7 +8,8 @@
 </head>
 <body>
         <%
-            String[] movies = Paths.get("G:\\vv\\m3u8").toFile().list();
+        String mp = System.getProperty("user.home");
+            String[] movies = Paths.get(mp + "\\vv\\m3u8").toFile().list();
             request.setAttribute("movies", movies);
         %>
 

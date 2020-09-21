@@ -16,27 +16,28 @@ import java.util.logging.Logger;
 public class UWoDeDyM3Get {
 
     public static void main(String[] args) throws IOException {
+        Logger logger = Logger.getGlobal();
         String mp = System.getProperty("user.home");
 
         Path urlFile = Paths.get(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\url.txt");
 
         String url = new String(Files.readAllBytes(urlFile));
         String urlScript  = Jsoup.connect(url).get().select("div.player").first().selectFirst("script").data();
-        System.out.println(urlScript);
+        logger.info(urlScript);
 
-        String startPart = "now=base64decode(\"";
-        String endPart = "\");var p";
+        String startPart = "now=\"";
+        String endPart = "\";var pn";
         int start = urlScript.indexOf(startPart) + startPart.length();
         int end = urlScript.indexOf(endPart, start);
-        String m3u8AddrKkUrl = new String(Base64.getDecoder().decode(urlScript.substring(start, end)));
-        System.out.println(m3u8AddrKkUrl);
+        String m3u8AddrKkUrl = urlScript.substring(start, end);
+        logger.info(m3u8AddrKkUrl);
 
         String kkText = Jsoup.connect(m3u8AddrKkUrl).ignoreContentType(true).get().text();
-        System.out.println(kkText);
+        logger.info(kkText);
         String kkContentToReplace = kkText.split(" ")[2];
         String m3u8Addr = m3u8AddrKkUrl.replace("index.m3u8", kkContentToReplace);
-        String m3u8Content = Jsoup.connect(m3u8Addr).ignoreContentType(true).get().text();
-        System.out.println(m3u8Content);
+        String m3u8Content = Jsoup.connect(m3u8Addr).ignoreContentType(true).timeout(5000).get().text();
+        logger.info(m3u8Content);
         // 下载用文件
         String[] m3lines = m3u8Content.split(" ");
         StringBuilder m3DownloadBuilder = new StringBuilder();
@@ -51,7 +52,7 @@ public class UWoDeDyM3Get {
         StringBuilder playBuilder = new StringBuilder();
         for (String m3line : m3lines) {
             if (m3line.endsWith(".ts")) {
-                playBuilder.append("http://192.168.124.3:7680/webj/ts/").append(m3line).append("\n");
+                playBuilder.append("http://192.168.124.3:7660/webj/ts/").append(m3line).append("\n");
             }else {
                 playBuilder.append(m3line).append("\n");
             }
