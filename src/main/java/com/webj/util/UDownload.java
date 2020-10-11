@@ -23,8 +23,6 @@ public class UDownload {
 
     public static void main(String[] args) throws InterruptedException, IOException {
 
-        ULine.main(null);
-
         String mp = System.getProperty("user.home");
         List<String> lines = Files.readAllLines(Paths.get(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
         ExecutorService executors = Executors.newFixedThreadPool(50);

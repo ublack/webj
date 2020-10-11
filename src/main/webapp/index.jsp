@@ -14,8 +14,8 @@
         %>
 
     <c:forEach var="movie" items="${movies}">
-        <h1><a href="one.jsp?movie=${movie}">${movie}</a></h1>
-        <h5><a href="delete/?movie=${movie}">删除-${movie}</a></h5>
+        <h1><a href="one.jsp?movie=${movie}" target="_blank">${movie}</a></h1>
+        <h5><a href="delete/?movie=${movie}" >删除-${movie}</a></h5>
     </c:forEach>
 
 </body>

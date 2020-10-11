@@ -14,7 +14,7 @@ public class Uutil {
         //Obtain only one instance of the SystemTray object
         SystemTray tray = SystemTray.getSystemTray();
 
-        TrayIcon trayIcon1 = new TrayIcon(ImageIO.read(new URL("https://f11.baidu.com/it/u=19624881,807413502&fm=72")));
+        TrayIcon trayIcon1 = new TrayIcon(ImageIO.read(new URL("http://www.tadedy.com/uploads/allimg/202003/abd18c66223268fe.jpg")));
         //Set tooltip text for the tray icon
         tray.add(trayIcon1);
         trayIcon1.displayMessage("Hello", "complete\n", TrayIcon.MessageType.INFO);
