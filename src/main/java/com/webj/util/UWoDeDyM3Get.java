@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class UWoDeDyM3Get {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         Logger logger = Logger.getGlobal();
         String mp = System.getProperty("user.home");
 
@@ -30,7 +30,15 @@ public class UWoDeDyM3Get {
         String m3u8AddrKkUrl = urlScript.substring(start, end);
         logger.info(m3u8AddrKkUrl);
 
-        String kkText = Jsoup.connect(m3u8AddrKkUrl).ignoreContentType(true).get().text();
+        String kkText = null;
+        for (int i = 0; i < 6; i++) {
+            try {
+                kkText = Jsoup.connect(m3u8AddrKkUrl).ignoreContentType(true).timeout(5000).get().text();
+                break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         logger.info(kkText);
         String kkContentToReplace = kkText.split(" ")[2];
         String m3u8Addr = m3u8AddrKkUrl.replace("index.m3u8", kkContentToReplace);
