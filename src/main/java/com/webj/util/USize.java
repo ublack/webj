@@ -11,5 +11,4 @@ public class USize {
 //        dest.openConnection().getHeaderFields().forEach((k,v)-> System.out.printf("%s = %s%n",k,v));
         System.out.println(dest.openConnection().getHeaderFields().get("Content-Length").toString());
     }
-
 }

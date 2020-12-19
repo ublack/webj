@@ -3,6 +3,7 @@ package com.webj.util;
 import org.jsoup.Jsoup;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +42,13 @@ public class UWoDeDyM3Get {
         }
         logger.info(kkText);
         String kkContentToReplace = kkText.split(" ")[2];
-        String m3u8Addr = m3u8AddrKkUrl.replace("index.m3u8", kkContentToReplace);
+        String m3u8Addr;
+
+        if (kkContentToReplace.startsWith("/")) {
+            m3u8Addr = UriComponentsBuilder.fromHttpUrl(m3u8AddrKkUrl).replacePath(kkContentToReplace).toUriString();
+        }else {
+            m3u8Addr = m3u8AddrKkUrl.replace("index.m3u8", kkContentToReplace);
+        }
         String m3u8Content = Jsoup.connect(m3u8Addr).ignoreContentType(true).timeout(5000).get().text();
         logger.info(m3u8Content);
         // 下载用文件
@@ -49,7 +56,11 @@ public class UWoDeDyM3Get {
         StringBuilder m3DownloadBuilder = new StringBuilder();
         for (String m3line : m3lines) {
             if (m3line.endsWith(".ts")) {
-                m3DownloadBuilder.append(StringUtils.applyRelativePath(m3u8Addr, m3line)).append("\n");
+                if (m3line.startsWith("/")) {
+                    m3DownloadBuilder.append(UriComponentsBuilder.fromHttpUrl(m3u8Addr).replacePath(m3line).toUriString()).append("\n");
+                }else {
+                    m3DownloadBuilder.append(StringUtils.applyRelativePath(m3u8Addr, m3line)).append("\n");
+                }
             }
         }
         FileCopyUtils.copy(m3DownloadBuilder.toString().getBytes(),
