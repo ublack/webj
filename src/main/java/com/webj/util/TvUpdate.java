@@ -15,7 +15,7 @@ public class TvUpdate {
         HashMap<String, List<String>> ees = new LinkedHashMap<>();
 
         ees.put("一念永恒", Arrays.asList("https://v.qq.com/detail/w/ww18u675tfmhas6.html", "http://www.tadedy.com/play/50502-0-@@@.html"));
-        ees.put("仙风剑雨录", Arrays.asList("https://v.qq.com/detail/m/mzc00200hc38s5x.html", "http://www.tadedy.com/play/49430-@@@-0.html"));
+        ees.put("仙风剑雨录", Arrays.asList("https://v.qq.com/detail/m/mzc00200hc38s5x.html", "http://www.tadedy.com/play/49430-0-@@@.html"));
         ees.put("灵剑尊", Arrays.asList("https://v.qq.com/detail/2/2w2legt0g8z26al.html", "http://www.tadedy.com/play/28274-0-@@@.html"));
         ees.put("斗罗大陆", Arrays.asList("https://v.qq.com/detail/m/m441e3rjq9kwpsc.html", "http://www.tadedy.com/play/20358-0-@@@.html"));
         ees.put("武神主宰", Arrays.asList("https://v.qq.com/detail/7/7q544xyrava3vxf.html", "http://www.tadedy.com/play/42462-0-@@@.html"));
