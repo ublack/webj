@@ -1,22 +1,22 @@
 package com.webj.util;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRange;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StopWatch;
-import org.springframework.util.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -26,23 +26,25 @@ public class RangeDownLoad {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        ExecutorService executors = Executors.newFixedThreadPool(5);
+        ExecutorService executors = Executors.newFixedThreadPool(50);
 
-        URL dest = new URL("https://www.python.org/ftp/python/3.9.1/python-3.9.1-amd64.exe");
+        URL dest = new URL("http://free.76fengyun.com/filestores/app/101004625/26013.zip?n=26013");
 //        dest.openConnection().getHeaderFields().forEach((k,v)-> System.out.printf("%s = %s%n",k,v));
         long len = dest.openConnection().getHeaderFieldLong("Content-Length", 0);
 //        dest.openConnection().getHeaderFields().forEach((k, v) -> System.out.printf("%s,%s%n", k, Arrays.toString(v.toArray())));
-        System.out.printf("文件长度:%s %n", FileUtils.byteCountToDisplaySize(len));
+        System.out.printf("文件长度:%s %n", len);
 
         String mp = System.getProperty("user.home");
-        new File(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\obj.exe").delete();
-        new File(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\obj.exe").createNewFile();
+        String destAddr = mp + "\\IdeaProjects\\webj\\src\\main\\resources\\obj.mp4";
 
-        RandomAccessFile destFile = new RandomAccessFile(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\obj.exe", "rw");
+        new File(destAddr).delete();
+        new File(destAddr).createNewFile();
+
+        RandomAccessFile destFile = new RandomAccessFile(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\obj.mp4", "rw");
         FileChannel destChannel = destFile.getChannel();
 
         ArrayList<Long[]> ll = new ArrayList<>();
-        long ut = 30000;
+        long ut = 1024 * 1024;
         long cn = 0;
         while (cn + ut < len) {
             Long[] one = new Long[]{cn, cn + ut};

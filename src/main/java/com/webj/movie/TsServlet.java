@@ -21,18 +21,6 @@ public class TsServlet extends HttpServlet {
 
         String path = req.getPathInfo();
         String fileName = StringUtils.getFilename(path);
-        while (true) {
-            if (new File(mp + "\\vv\\ts\\" + fileName).exists()) {
-                break;
-            } else {
-                try {
-                    System.out.printf("未到位: %s%n", fileName);
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException ignored) {
-
-                }
-            }
-        }
         FileCopyUtils.copy(new FileInputStream(mp + "\\vv\\ts\\" + fileName), resp.getOutputStream());
     }
 }

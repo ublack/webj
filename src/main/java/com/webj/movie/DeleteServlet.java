@@ -26,7 +26,8 @@ public class DeleteServlet extends HttpServlet {
         List<String> names = Files.readAllLines(Paths.get(mp + "/vv/m3u8/" + dirName + "/index.m3u8"))
                 .stream()
                 .filter(v -> v.endsWith(".ts"))
-                .map(v -> new LinkedList<>(Arrays.asList(v.split("/"))).getLast()).collect(Collectors.toList());
+                .map(v -> new LinkedList<>(Arrays.asList(v.split("/"))).getLast())
+                .collect(Collectors.toList());
 
         // 删除 ts 片段
         names.forEach(v -> FileSystemUtils.deleteRecursively(new File(mp + "/vv/ts/" + v)));
@@ -36,6 +37,6 @@ public class DeleteServlet extends HttpServlet {
         System.out.printf("删除: %s", dirName);
         System.out.println();
          // 返回
-        resp.sendRedirect("/webj");
+        resp.sendRedirect("/webj/");
     }
 }
