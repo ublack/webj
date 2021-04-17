@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,7 +33,7 @@ public class UWoDeDyM3Get {
         logger.info(m3u8AddrKkUrl);
 
         String kkText = null;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 30; i++) {
             try {
                 kkText = Jsoup.connect(m3u8AddrKkUrl).ignoreContentType(true).timeout(5000).get().text();
                 break;
@@ -62,6 +63,12 @@ public class UWoDeDyM3Get {
                     m3DownloadBuilder.append(StringUtils.applyRelativePath(m3u8Addr, m3line)).append("\n");
                 }
             }
+            if (m3line.contains("key.key")) {
+                String keyUrl = StringUtils.tokenizeToStringArray(m3line, "\"")[1];
+                keyUrl = UriComponentsBuilder.fromHttpUrl(m3u8Addr).replacePath(keyUrl).toUriString();
+                String keyContent = Jsoup.connect(keyUrl).ignoreContentType(true).timeout(5000).get().text();
+                FileCopyUtils.copy(keyContent,new FileWriter("C:\\Users\\Administrator\\IdeaProjects\\webj\\src\\main\\resources\\key.txt"));
+            }
         }
         FileCopyUtils.copy(m3DownloadBuilder.toString().getBytes(),
                 new File(mp + "\\IdeaProjects\\webj\\src\\main\\resources\\m3u8.txt"));
@@ -70,7 +77,10 @@ public class UWoDeDyM3Get {
         for (String m3line : m3lines) {
             if (m3line.endsWith(".ts")) {
                 playBuilder.append("http://192.168.124.3:7660/webj/ts/").append(m3line).append("\n");
-            }else {
+            }else if (m3line.contains("key.key")){
+                String keyUrl0 = StringUtils.tokenizeToStringArray(m3line, "\"")[1];
+                playBuilder.append(m3line.replace(keyUrl0, "http://192.168.124.3:7660/webj/key.key")).append("\n");
+            } else {
                 playBuilder.append(m3line).append("\n");
             }
         }
